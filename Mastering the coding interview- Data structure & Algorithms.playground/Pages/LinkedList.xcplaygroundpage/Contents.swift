@@ -66,7 +66,36 @@ struct LinkedList<Value> {
     }
     
     mutating func insert(index: Int, value: Value) {
+        if index >= self.length {
+            append(value)
+            return
+        }
         
+        let newNode = Node(value: value, next: nil)
+        // 找到指定 index 的前一個 node
+        let leader = traverseToIndex(index - 1)
+        // 找到指定 index 原本的 node 先暫存起來
+        let holdingPointer = leader?.next
+        // 把 leader.next 改成要插入的 node
+        leader?.next = newNode
+        // 把原本暫存的 node 接回去
+        newNode.next = holdingPointer
+        // 更新長度
+        self.length += 1
+    }
+    
+    mutating func remove(index: Int) {
+        
+    }
+    
+    func traverseToIndex(_ index: Int) -> Node<Value>? {
+        var counter = 0
+        var currentNode = self.head
+        while counter != index {
+            currentNode = currentNode?.next
+            counter += 1
+        }
+        return currentNode
     }
 }
 
