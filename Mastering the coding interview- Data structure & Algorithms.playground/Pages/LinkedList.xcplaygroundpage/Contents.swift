@@ -85,9 +85,17 @@ struct LinkedList<Value> {
     }
     
     mutating func remove(index: Int) {
+        // 找到指定 index 的前一個 node
+        let leader = traverseToIndex(index - 1)
+        // 找到指定 index 的 node
+        let unwantedNode = leader?.next
+        // 把前一個 node.next 改為後一個 node
+        leader?.next = unwantedNode?.next
         
+        self.length -= 1
     }
     
+    // while loop 讓時間複雜度變為 O(n)
     func traverseToIndex(_ index: Int) -> Node<Value>? {
         var counter = 0
         var currentNode = self.head
@@ -110,5 +118,7 @@ myLinkedList.append(5)
 myLinkedList.append(16)
 myLinkedList.prepend(1)
 myLinkedList.insert(index: 2, value: 99)
+myLinkedList.remove(index: 2)
+myLinkedList.remove(index: 2)
 dump(myLinkedList)
 print(myLinkedList)
