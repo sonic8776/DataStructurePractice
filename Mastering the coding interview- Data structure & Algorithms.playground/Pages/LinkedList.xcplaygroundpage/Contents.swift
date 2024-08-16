@@ -1,24 +1,24 @@
 import Foundation
 
 /*
-class LinkedList {
-  constructor(value) {
-    this.head = {
-      value: value,
-      next: null
-    };
-    this.tail = this.head;
-    this.length = 1;
-  }
-  append(value) {
-    //Code here
-  }
-}
-
-let myLinkedList = new LinkedList(10);
-myLinkedList.append(5);
-myLinkedList.append(16);
-*/
+ class LinkedList {
+ constructor(value) {
+ this.head = {
+ value: value,
+ next: null
+ };
+ this.tail = this.head;
+ this.length = 1;
+ }
+ append(value) {
+ //Code here
+ }
+ }
+ 
+ let myLinkedList = new LinkedList(10);
+ myLinkedList.append(5);
+ myLinkedList.append(16);
+ */
 
 class Node<Value> {
     var value: Value
@@ -105,6 +105,31 @@ struct LinkedList<Value> {
         }
         return currentNode
     }
+    
+    mutating func reverse() -> Node<Value>? {
+        if head?.next == nil {
+            // just one element so no need to reverse
+            print("do nothing, list is already reversed")
+            return head
+        }
+        
+        var previous: Node<Value>? = nil
+        var currentNode = head
+        tail = currentNode
+        var next: Node<Value>? = nil
+        
+        while (currentNode != nil) {
+            next = currentNode?.next
+            currentNode?.next = previous
+            previous = currentNode
+            currentNode = next
+        }
+        head?.next = nil
+        head = previous
+        print(head, tail)
+        return previous
+    }
+    
 }
 
 extension LinkedList: CustomStringConvertible {
@@ -122,3 +147,5 @@ myLinkedList.remove(index: 2)
 myLinkedList.remove(index: 2)
 dump(myLinkedList)
 print(myLinkedList)
+print("===========================")
+print(myLinkedList.reverse())
